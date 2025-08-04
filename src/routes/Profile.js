@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { getStorage, ref ,getDownloadURL, uploadBytes  } from "firebase/storage";
 import { useEffect, useState } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { collection, query, where, onSnapshot, orderBy, getDocs  } from "firebase/firestore";
+import { collection, query, where, orderBy, getDocs  } from "firebase/firestore";
 import { db } from '../firebase'; // db 인스턴스 불러오기
 import Comment from '../components/Comment';
 
@@ -62,6 +62,8 @@ const Profile = ()=>{
     })
     console.log(user)
   }
+
+  // eslint-disable-next-line
   useEffect(()=>{
     (user.photoURL !== null && user.photoURL.includes('firebase')) && setProfile(user.photoURL)
     getComments();
