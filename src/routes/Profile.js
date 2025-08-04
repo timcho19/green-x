@@ -34,7 +34,7 @@ const Profile = ()=>{
   }));
   setComments(commentsArray);
 
-  },[]);
+  },[user.uid]);
 
 
   const onLogout = ()=>{
