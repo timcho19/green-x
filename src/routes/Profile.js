@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import { getAuth, signOut, updateProfile  } from "firebase/auth";
 import { useNavigate } from "react-router";
 import { getStorage, ref ,getDownloadURL, uploadBytes  } from "firebase/storage";
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { collection, query, where, orderBy, getDocs  } from "firebase/firestore";
 import { db } from '../firebase'; // db 인스턴스 불러오기
@@ -24,18 +24,17 @@ const Profile = ()=>{
   const [ profile, setProfile] = useState(defaultProfileURL);
   const [comments, setComments] = useState([]);
 
+ const getComments= useCallback(async ()=>{
+  const q = query(collection(db, "comments"), where("uid", "==", user.uid),orderBy('date',"desc"));
 
-  const getComments = async ()=>{
-    const q = query(collection(db, "comments"), where("uid", "==", user.uid),orderBy('date',"desc"));
-  
-    const querySnapshot = await getDocs(q);
-    const commentsArray = querySnapshot.docs.map((doc)=>({
-      ...doc.data(),
-      id:doc.id
-    }));
-    setComments(commentsArray);
-  
-  }
+  const querySnapshot = await getDocs(q);
+  const commentsArray = querySnapshot.docs.map((doc)=>({
+    ...doc.data(),
+    id:doc.id
+  }));
+  setComments(commentsArray);
+
+  },[]);
 
 
   const onLogout = ()=>{
@@ -67,7 +66,7 @@ const Profile = ()=>{
   useEffect(()=>{
     (user.photoURL !== null && user.photoURL.includes('firebase')) && setProfile(user.photoURL)
     getComments();
-  },[])
+  },[getComments,user.photoURL])
 
   return (
     <>
