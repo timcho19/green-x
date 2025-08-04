@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <h1>sync 와 await</h1>
+
+<script>
+  // 1초 지연 함수
+const func1 = () => {
+
+    setTimeout(() => {
+      console.log("🔥 func1 실행");
+     
+     
+    }, 1000);
+    return 'func1 리턴'
+
+};
+
+const func2 = () => {
+  
+    setTimeout(() => {
+      console.log("✅ func2 실행");
+      
+    }, 1000);
+  return 'func2 리턴'
+};
+
+const func3 = () => {
+
+    setTimeout(() => {
+      console.log("🎯 func3 실행");
+    
+    }, 1000);
+ return 'func3 리턴'
+};
+
+// 실행 함수
+const run = async () => {
+  console.log("시작");
+
+  const result1 = await func1(); // 🔹 func1 실행 대기
+  console.log("➡️ func1 완료:", result1);
+
+  const result2 = await func2(); // 🔹 func2 실행 대기
+  console.log("➡️ func2 완료:", result2);
+
+  const result3 = await func3(); // 🔹 func3 실행 대기
+  console.log("➡️ func3 완료:", result3);
+
+  console.log("모든 함수 완료");
+};
+
+run();
+
+
+</script>
+</body>
+</html>
