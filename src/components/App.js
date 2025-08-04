@@ -42,7 +42,8 @@ function App() {
         : 
         "초기화중..."
       }
-      
+      <hr/>
+      <p>copyright timcho19 Allright reserved</p>
     </div>
   );
 }
